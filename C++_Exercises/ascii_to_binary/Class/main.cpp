@@ -14,5 +14,5 @@ int main() {
     // in this 2 lines i called a method that Cat have and give Info about Cat object
     myCat.getInfo();
     yourCat.getInfo();
-    return 0;
+    return 0; // closes program
 }
