@@ -12,6 +12,9 @@
 # for ignore binary files
 # Ignore all
 *
+!Makefile
+!MakeFile
+!makefile
 # Unignore all with extensions
 !*.*
 # Unignore all dirs exept build
