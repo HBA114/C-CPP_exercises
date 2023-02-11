@@ -1,17 +1,18 @@
 #include <stdio.h>
 #include <unistd.h>
 
-int main( void )
+int main(void)
 {
-        fflush(stdout);
-        printf("\n[T2] test2 programıyım ve sürekli çalışıyorum...");
-        int d=0;
+    fflush(stdout);
+    printf("\n[T2] test2 programıyım ve sürekli çalışıyorum...");
+    int d = 0;
 
-        while(1) {
-                printf("\n[T2] %d. saniye",++d);
-                fflush(stdout);
-                sleep(1);
-        }
+    while (1)
+    {
+        printf("\n[T2] %d. saniye", ++d);
+        fflush(stdout);
+        sleep(1);
+    }
 }
 /*
 $ gcc test2.c -o test2.o
