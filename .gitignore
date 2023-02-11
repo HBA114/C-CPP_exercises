@@ -9,6 +9,13 @@
 *.so
 ###################
 
+# for ignore binary files
+# Ignore all
+*
+# Unignore all with extensions
+!*.*
+# Unignore all dirs exept build
+!*/
 **/build
 
 ## Ignore Visual Studio temporary files, build results, and
