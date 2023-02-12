@@ -3,7 +3,7 @@
 ### Projects
 
 - [Arrays](https://github.com/HBA114/C-CPP_exercises/tree/main/BTK/Arrays)
-- [Loops](https://github.com/HBA114/C-CPP_exercises/tree/main/BTK/)
+- [Loops](https://github.com/HBA114/C-CPP_exercises/tree/main/BTK/Loops1)
 - [Loops2](https://github.com/HBA114/C-CPP_exercises/tree/main/BTK/Loops2)
 - [OOP](https://github.com/HBA114/C-CPP_exercises/tree/main/BTK/OOP)
 - [OOP2](https://github.com/HBA114/C-CPP_exercises/tree/main/BTK/OOP2)
