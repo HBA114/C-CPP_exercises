@@ -11,17 +11,17 @@ int main()
     // read from file and create node vector with adjacency's
     vector<Node> nodes = read_file("../matrix.txt");
 
-    //* write adjacency's
     cout << "Node Id: Adjacent Node Id's" << endl;
     for (int i = 0; i < nodes.size(); i++)
     {
         cout << nodes[i].node_id << " : ";
         for (int j = 0; j < nodes[i].adjacent_nodes.size(); j++)
         {
-            cout << nodes[i].adjacent_nodes[j].node_id << " ";
+            cout << nodes[i].adjacent_nodes[j] << " ";
         }
         cout << endl;
     }
+    cout << endl;
 
     BFS bfs(nodes);
     DFS dfs(nodes);

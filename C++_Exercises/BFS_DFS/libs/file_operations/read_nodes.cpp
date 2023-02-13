@@ -23,6 +23,7 @@ vector<Node> read_file(string file_name)
     for (int i = 0; i < lines.size(); i++)
     {
         int j_index = 0;
+
         for (int j = 0; j < lines[i].length(); j += 2)
         {
             if (lines[i][j] == '1')
@@ -30,7 +31,7 @@ vector<Node> read_file(string file_name)
                 bool control = true;
                 for (int k = 0; k < nodes[i].adjacent_nodes.size(); k++)
                 {
-                    if (nodes[i].adjacent_nodes[k].node_id == nodes[j_index].node_id)
+                    if (nodes[i].adjacent_nodes[k] == nodes[j_index].node_id)
                     {
                         control = false;
                         break;
@@ -38,10 +39,30 @@ vector<Node> read_file(string file_name)
                 }
 
                 if (control)
-                    nodes[i].add_adjacent(nodes[j_index]);
+                    nodes[i].add_adjacent(j_index);
             }
             j_index++;
         }
+
+        // for (int j = 0; j < lines[i].length(); j += 2)
+        // {
+        //     if (lines[i][j] == '1')
+        //     {
+        //         bool control = true;
+        //         for (int k = 0; k < nodes[i].adjacent_nodes.size(); k++)
+        //         {
+        //             if (nodes[i].adjacent_nodes[k].node_id == nodes[j_index].node_id)
+        //             {
+        //                 control = false;
+        //                 break;
+        //             }
+        //         }
+
+        //         if (control)
+        //             nodes[i].add_adjacent(nodes[j_index]);
+        //     }
+        //     j_index++;
+        // }
     }
 
     Matrix.close();

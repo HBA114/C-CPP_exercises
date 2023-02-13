@@ -6,7 +6,11 @@ Node::Node(int id)
     is_visited = false;
 }
 
-void Node::add_adjacent(Node adjacent_node)
+Node::Node()
 {
-    adjacent_nodes.push_back(adjacent_node);
+}
+
+void Node::add_adjacent(int adjacent_node_id)
+{
+    adjacent_nodes.push_back(adjacent_node_id);
 }
