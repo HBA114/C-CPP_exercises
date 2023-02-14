@@ -11,7 +11,6 @@ int main()
     // read from file and create node vector with adjacency's
     vector<Node> nodes = read_file("../matrix.txt");
     vector<Node> nodes2 = read_file("../matrix2.txt");
-    //! you can change file name to matrix2.txt for see other outputs
 
     BFS bfs(nodes);
     DFS dfs(nodes);
