@@ -10,6 +10,16 @@ int main()
 {
     // read from file and create node vector with adjacency's
     vector<Node> nodes = read_file("../matrix.txt");
+    vector<Node> nodes2 = read_file("../matrix2.txt");
+    //! you can change file name to matrix2.txt for see other outputs
+
+    BFS bfs(nodes);
+    DFS dfs(nodes);
+
+    BFS bfs2(nodes2);
+    DFS dfs2(nodes2);
+
+    cout << "Output from matrix1.txt" << endl;
 
     cout << "Node Id: Adjacent Node Id's" << endl;
     for (int i = 0; i < nodes.size(); i++)
@@ -23,11 +33,25 @@ int main()
     }
     cout << endl;
 
-    BFS bfs(nodes);
-    DFS dfs(nodes);
-
     bfs.print_order();
     dfs.print_order();
 
+    cout << endl;
+    cout << "Output from matrix2.txt" << endl;
+
+    cout << "Node Id: Adjacent Node Id's" << endl;
+    for (int i = 0; i < nodes2.size(); i++)
+    {
+        cout << nodes2[i].node_id << " : ";
+        for (int j = 0; j < nodes2[i].adjacent_nodes.size(); j++)
+        {
+            cout << nodes2[i].adjacent_nodes[j] << " ";
+        }
+        cout << endl;
+    }
+    cout << endl;
+
+    bfs2.print_order();
+    dfs2.print_order();
     return 0;
 }

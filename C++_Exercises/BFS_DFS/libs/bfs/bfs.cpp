@@ -7,9 +7,11 @@ BFS::BFS(vector<Node> nodes)
 
 void BFS::print_order()
 {
-    cout << "BFS Search Order:" << endl;
     vector<Node> queue;
     vector<Node> visit_order;
+
+    // Visit Order should be: 0 -> 1 -> 3 -> 4 -> 2 . for matrix.txt
+    // Visit Order should be: 0 -> 1 -> 2 -> 4 -> 3 -> 5 -> 6 . for matrix2.txt
 
     queue.push_back(nodes[0]);
 
@@ -39,7 +41,7 @@ void BFS::print_order()
         queue.erase(queue.begin());
     }
 
-    cout << "BFS Visit Order:" << endl;
+    cout << "Breadth First Search Visit Order:" << endl;
     for (int i = 0; i < visit_order.size(); i++)
     {
         cout << visit_order[i].node_id;
