@@ -26,6 +26,8 @@ public:
     {
         cout << name + ": " << ammoCapacity << " x fire" << endl;
     }
+
+    virtual void sound() = 0;
 };
 
 class AK47 : public Weapon
@@ -43,14 +45,39 @@ public:
     {
         cout << "AK47 Deconstructor!" << endl;
     }
+
+    void sound()
+    {
+        cout << "Rataatatata!" << endl;
+    }
 };
 
 class SarsilmazSar9 : public Weapon
 {
+public:
+    void sound()
+    {
+        cout << "Bam Bam Bam" << endl;
+    }
 };
 
 class AWP : public Weapon
 {
+};
+
+class M1 : public Weapon
+{
+public:
+    bool hasScope;
+    bool hasStrap;
+};
+
+class M1Silver : public M1
+{
+    void sound()
+    {
+        // must override
+    }
 };
 
 void test(AK47 &ak47)
@@ -66,6 +93,11 @@ void testPtr(AK47 *ak47)
 void testWeapon(Weapon &weapon) // works with all weapon that inherits weapon class
 {
     weapon.name = "WeaponTest";
+}
+
+void fireSound(Weapon *weapon)
+{
+    weapon->sound();
 }
 
 int main()
@@ -110,6 +142,12 @@ int main()
 
     testWeapon(ak47);
     ak47.fire();
+
+    fireSound(&ak47);
+    fireSound(&sar9);
+
+    M1Silver m1Silver;
+    m1Silver.hasStrap = true;
 
     return 0;
 }
