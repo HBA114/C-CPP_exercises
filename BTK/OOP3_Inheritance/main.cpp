@@ -46,6 +46,12 @@ public:
         cout << "AK47 Deconstructor!" << endl;
     }
 
+    void fire()
+    {
+        Weapon::fire();
+        cout << "Fire from AK47 fire Method" << endl;
+    }
+
     void sound()
     {
         cout << "Rataatatata!" << endl;
