@@ -22,6 +22,12 @@ public:
         cout << "Weapon (" << name << ") Deconstructor!" << endl;
     }
 
+    void *get(const Weapon *weapon)
+    {
+        // weapon->serialNumber = 123; //! if parameter is const(constant) can not change values
+        return &weapon;
+    }
+
     void fire()
     {
         cout << name + ": " << ammoCapacity << " x fire" << endl;
