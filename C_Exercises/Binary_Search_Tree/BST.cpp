@@ -104,7 +104,6 @@ int main()
                     printf("%d - ", levelArray[i]);
             }
             printf("\n");
-            // getch();                                        // Sonucu ekrana yazdirinca kullanici herhangi bir tusa basana kadar bilgilerin ekranda kalmasi icin getch() kullandim.
             getchar();
             fflush(stdin);
             getchar();
