@@ -1,6 +1,6 @@
 # Union Test
 
-- In this project i look for use states of `union`, differences between `union` and `struct` and benefits of using `unions`.
+- In this project i look for use states of `union`, differences between `union` and `struct` and benefits of using `union`.
 
 ## Requirements
 - cmake, make, gcc

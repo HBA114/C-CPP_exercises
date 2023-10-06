@@ -1,21 +1,21 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-typedef struct
+typedef struct MyStr
 {
     int stock;
     float price;
     char character;
-} mystr;
+} myStr;
 
-typedef union
+typedef union MyUnion
 {
     int stock;
     float price;
     char character;
-} myunion;
+} myUnion;
 
-typedef struct
+typedef struct Character
 {
     char *name;
     bool isRobot;
@@ -50,23 +50,23 @@ void printCharacter(character *character)
 
 int main()
 {
-    printf("%lu\n", sizeof(mystr));
-    printf("%lu\n", sizeof(myunion));
+    printf("%lu\n", sizeof(myStr));
+    printf("%lu\n", sizeof(myUnion));
 
-    mystr mystr1;
-    mystr1.stock = 10;
-    mystr1.price = 15.75;
-    mystr1.character = 'A';
+    myStr myStr;
+    myStr.stock = 10;
+    myStr.price = 15.75;
+    myStr.character = 'A';
 
-    myunion myunion1;
-    myunion1.stock = 10;
-    myunion1.price = 15.75;
-    myunion1.character = 'A';
+    myUnion myUnion;
+    myUnion.stock = 10;
+    myUnion.price = 15.75;
+    myUnion.character = 'A';
 
-    printf("mystr1 values: %d , %f , %c\n", mystr1.stock, mystr1.price, mystr1.character);
-    printf("mystr1 size: %lu bytes\n", sizeof(mystr1));
-    printf("myunion1 values: %d , %f , %c\n", myunion1.stock, myunion1.price, myunion1.character);
-    printf("myunion1 size: %lu bytes\n", sizeof(myunion1));
+    printf("myStr values: %d , %f , %c\n", myStr.stock, myStr.price, myStr.character);
+    printf("myStr size: %lu bytes\n", sizeof(myStr));
+    printf("myUnion values: %d , %f , %c\n", myUnion.stock, myUnion.price, myUnion.character);
+    printf("myUnion size: %lu bytes\n", sizeof(myUnion));
 
     printf("\nsizeof character with union: %lu bytes\n", sizeof(character));
     printf("sizeof character just struct: %lu bytes\n\n", sizeof(character_just_struct));
