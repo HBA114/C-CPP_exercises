@@ -5,7 +5,7 @@
 
 int main()
 {
-    // created tree
+    // Created tree
     tree *binaryTree = NULL; // main() fonksiyonunda arama agaclarında kullanmak icin binaryTree data yapisindan bir pointer olusturdum ve NULL ile isaretledim.
 
     int process = 1, sum = 0, choice, number, j, avg, f; // Secimi, girilen degeri, sum, ortalama ve sayma sayaci icin degisken atadim.
