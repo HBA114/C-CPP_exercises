@@ -154,6 +154,7 @@ int main()
             // Stopped program with exit code 0.
             return 0;
             break;
+
         // If user input is invalid, cleared console and re-printed options.
         default:
             ClearConsole();
