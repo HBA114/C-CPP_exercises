@@ -5,6 +5,7 @@ int main()
 {
     int x = 5;
     int *ptr = &x;
+
     printf("The value of x.......... = %d\n", x);
     printf("The value of ptr........ = %d\n", ptr);
     printf("The value of *ptr....... = %d\n", *ptr);
