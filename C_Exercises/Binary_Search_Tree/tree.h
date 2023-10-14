@@ -2,118 +2,178 @@
 #define TREE_H
 #include <stdio.h>
 #include <stdlib.h>
+// Included required libraries.
 
-typedef struct Tree // Ikili arama agaci yapisini struct yardimiyla olusturdum.
-{                   // Agacin sayisal data tutmasi icin bir int degisken atadim.
-    int data;
-    Tree *left, *right; // Agaci iki kola ayirabilmek icin right ve left pointerlarini binaryTree data cinsinden olusturdum.
-} tree;
-
-tree *add(tree *binaryTree, int number) // Agaca eleman ekleyebilmek icin add() fonksiyonunu binaryTree data cinsinden olusturdum ve girdi olarak binaryTree pointeri ve sayisal data aldim.
+struct BinaryTree // Created a struct named BinaryTree for binary search tree.
 {
-    if (binaryTree == NULL) // Agac bos olmasi durumunu if() baglaci ile control ederek bos ise :
+    int data;                 // Created an int field for storing data
+    BinaryTree *left, *right; // For separating leaves, created 2 BinaryTree pointers as left and right.
+};
+
+BinaryTree *Add(BinaryTree *binaryTree, int number) // Created add function for adding leaves to binary tree.
+{
+    // If leaf of tree is null(empty):
+    if (binaryTree == NULL)
     {
-        tree *root = (tree *)malloc(sizeof(tree)); // Agacın kokunu olusturmak icin bellekten yer ayirma amaciyla malloc fonksiyonu kullandim.
-        root->left = NULL;                          // Agacin right ve left dallari bos olacagindan bunlari NULL ile isaretledim.
+        // Created root pointer for storing data.
+        BinaryTree *root = (BinaryTree *)malloc(sizeof(BinaryTree));
+        root->left = NULL; // Assigned null to leaves as default.
         root->right = NULL;
-        root->data = number; // Agacin kok degerine kullanicinin girdigi veriyi atadim.
+        root->data = number; // Assigned the given data to root.
         return root;
-    }                   // Agac bos degil ise :
-    if (binaryTree->data < number) // Kullanicinin girmek istedigi data Agacin kok verisinden buyuk ise agacin right dalina gitmesi
+    }
+
+    // If leaf is not empty:
+    if (binaryTree->data < number) // If data is greater than root go right leaf(recursively).
     {
-        binaryTree->right = add(binaryTree->right, number);
+        binaryTree->right = Add(binaryTree->right, number);
         return binaryTree;
     }
-    binaryTree->left = add(binaryTree->left, number); // Kullanicinin girdigi deger Agacin kok verisinden kucuk ise agacin left dalina gitmesi icin add() fonksiyonunu tekrar cagirarak,
-    return binaryTree;                    // Recursive (oz yinelemeli) sekilde veriye uygun yer bulunana kadar ilereleyen bir fonksiyon yapisi olusturdum.
+
+    binaryTree->left = Add(binaryTree->left, number); // If data is less than root go left leaf(recursively).
+
+    return binaryTree;
 }
 
-// Aranan seviyedeki elemanlari listeleyebilmek icin dizi olusturdum.
-int levelArray[100]; /*10*/
-int f = 0;           // Seviyeyi belirleyebilmek icin iki degisken olusturdum.
-int k = 0;
-void level(tree *binaryTree, int number) // Aranan seviyedeki elemanlari bulup onlari diziye aktaracak fonksiyonu yazdim.
+// Created a function for searching leaves by level. 0. level is root level of tree.
+int levelArray[100]; // Created an array for storing leaves of level.
+int levelIndex = 0;  // Created two variables for finding level as f and k.
+int index = 0;
+void Level(BinaryTree *binaryTree, int levelNumber)
 {
-    if (binaryTree == NULL) // Agac bos ise fonksiyonu durdurdum. Islem yapilirken wanted level bos ise bos oldugunu belirtmek icin buradaki degiskenlerden faydalandim.
+    // Stopped the function with return if tree is empty.
+    if (binaryTree == NULL)
         return;
-    if (f == number) // Aranan level level sayacina esit olunca o seviyedeki elemani diziye aktardim.
+
+    // If the searched level is found:
+    if (levelIndex == levelNumber)
     {
-        levelArray[k] = binaryTree->data;
-        k++; // Sonraki elemani dizinin sonraki elemanina aktarabilmek icin dizinin eleman sayacini 1 artirdim.(Her bir arama icin dizi eleman sayaci 0'dan baslar.)
+        // Added data to leaves array and increase index by 1 for adding next data.
+        levelArray[index] = binaryTree->data;
+        index++;
     }
-    f++; // Agacin soluna veya sagina gitmesi icin tekrar cagirilan fonksiyon icin level sayacini 1 artirdim.
-    level(binaryTree->left, number);
-    level(binaryTree->right, number);
-    f--; // Bulunulan dalin solu ve sagi bossa bir onceki dala donerken seviyeyi 1 eksilttim.
+
+    // For getting right and left leaf, increased levelIndex by 1.
+    levelIndex++;
+    Level(binaryTree->left, levelNumber);
+    Level(binaryTree->right, levelNumber);
+    // If right and left leaves are empty, for returning to previous leaf, decreased levelIndex by 1.
+    levelIndex--;
 }
 
-int leaves[100];     // Yapraklardaki verileri tutup ortalamalarini alabilmek icin bir dizi olusturdum.
-int i = 0;              // Diziye eleman ekleyebilmek icin bir degisken atadim.
-void leaf(tree *binaryTree) // Yapraklari bulan ve yaprakları tutacak diziye aktaran leaf() fonksiyonunu olusturdum. Fonksiyon girdisi olarak binaryTree data tipinden pointer aldim.
+// Created an array for storing data of all leaves. Used for calculating arithmetic mean.
+int leaves[100];
+int i = 0;
+// Created a function for finding leaves and adding data to array
+void Leaf(BinaryTree *binaryTree)
 {
-    tree *iter;       //  Agacta gezebilmek icin binaryTree data tipinden bir gezici pointer olusturdum ve recursive yapida bu pointeri kullandim.
-    if (binaryTree == NULL) // Agac bos ise fonksiyonu durdurdum.
+    // Created a BinaryTree pointer for searching leaves
+    BinaryTree *iter;
+
+    // Stopped the function if the tree is empty
+    if (binaryTree == NULL)
         return;
-    if (binaryTree->left == NULL && binaryTree->right == NULL) // Agac bos degilse ama bulunulan elemanin sagi ve solu bos ise o eleman leaf olarak tanimlandigindan o elemani diziye aktardim.
+
+    // Controlled the left and right leaves for confirming the element is a leaf
+    if (binaryTree->left == NULL && binaryTree->right == NULL)
     {
-        leaves[i] = binaryTree->data; // Dizinin eleman sayacini 1 arttirarak sonraki yapragin dizinin sonraki alanina atanmasini sagladim.
+        // Added leaf data to array and increased array index for next data
+        leaves[i] = binaryTree->data;
         i++;
-        iter = binaryTree; // Yaprak bulunduktan sonra gezici pointeri tekrar basa alarak diger yapraklari aramasini sagladim.
+        // After finding leaf, assigned the pointer to root of tree
+        iter = binaryTree;
     }
-    if (binaryTree->right != NULL) // Bulunulan elemanin sagi bos degil ise :
+
+    // Controlled right element is empty
+    if (binaryTree->right != NULL)
     {
-        iter = binaryTree->right; // Gezici pointeri agacin right elemanini gosterecek sekilde atayip fonksiyonu gezici pointer ile tekrar cagirdim.
-        leaf(iter);
+        // Assigned the pointer to right element and called function recursively.
+        iter = binaryTree->right;
+        Leaf(iter);
     }
-    if (binaryTree->left != NULL) // Bulunulan elemanin sagi bos degil ise :
+
+    // Controlled left element is empty
+    if (binaryTree->left != NULL)
     {
-        iter = binaryTree->left; // Gezici pointeri agacin left elemanini gosterecek sekilde atayip fonksiyonu gezici pointer ile tekrar cagirdim.
-        leaf(iter);     // Bu sayede leaves diziye aktarilip diziden ortalamalarini almak uzere kullaniliyor.
+        // Assigned the pointer to left element and called function recursively.
+        iter = binaryTree->left;
+        Leaf(iter);
     }
 }
 
-int stepCount;                    // Aranan elemanin kac adimda bulundugunu tespit edip kullaniciya bildirmek icin stepCount degskeni olusturdum.
-int search(tree *binaryTree, int wanted) // Kullanicidan alinan veriyi agacta aramak icin search() fonksiyonunu olusturdum ve girdi olarak binaryTree data tipinden pointer ve wanted elemani aldim.
+// Created step counter variable.
+int stepCount;
+// Created a function for searching element in binary tree.
+int Search(BinaryTree *binaryTree, int wanted)
 {
-    if (binaryTree == NULL) // Aranan eleman bulunamadi ise fonksiyon "-1" degeri dondurerek sonlaniyor ve kullaniciya wanted elemanin bulunamadigini bildiriyor.
+    // Stopped the and returned -1 if element is not found in tree.
+    if (binaryTree == NULL)
     {
-        printf("%d elemani bulunamadi.\n", wanted);
+        printf("%d not found in tree.\n", wanted);
         return -1;
     }
-    if (binaryTree->data == wanted) // Aranan eleman bulundu ise kullaniciya elemanin kac adimda bulundugu bildiriliyor ve fonksiyon "1" degeri dondurerek sonlaniyor.
+
+    // If the element found, stopped the function and returned 1, printed wanted element with step count to console
+    if (binaryTree->data == wanted)
     {
-        printf("%d elemani %d adimda bulundu.\n", wanted, stepCount);
+        printf("Found %d. Step Count: %d\n", wanted, stepCount);
         return 1;
     }
 
-    stepCount++;               // Aranan eleman bakilan yerde bulunamadi ise adim sayacini bir artirarak :
-    if (wanted < binaryTree->data) // Aranan deger bakilan degerden kucuk ise agacin left tarafina bakilmasi icin fonksşyonu tekrar calistirdim.(recursive)
+    // Increased step count if the element is not found yet.
+    stepCount++;
+    // If the wanted element is less then data in current position:
+    if (wanted < binaryTree->data)
     {
+        // Search recursively starts from left element
         binaryTree = binaryTree->left;
-        search(binaryTree, wanted); /*iter*/
+        Search(binaryTree, wanted);
     }
-    else // Aranan deger bakilan degerden buyuk ise agacin right tarafina bakilmasi icin fonksşyonu tekrar calistirdim.(recursive)
+    else // If the wanted element is greater then data in current position:
     {
+        // Search recursively starts from right element
         binaryTree = binaryTree->right;
-        search(binaryTree, wanted); /*iter*/
-    }                      // Bu sekilde wanted eleman bulunana kadar gerekli yyone gidildi ve eleman bulununca adim sayisi kullaniciya bildirildi ve fonksiyon sonlandirildi.
-    return -1;
-} // Eleman bulunamadi ise kullaniciya elemanin bulunamadigini bildirerek fonksiyonu sonlandirdim.
-
-int bigElementsArray[100];           // Kullanicidan alinan belirli bir degerden buyuk elemanlari tutabilmek ve duzgun listeleybilmek icin bir dizi tanimladim.
-int control = 0;                     // Bulunamamasi durumunda kullaniciya bildirebilmek icin control degiskeni olusturdum.
-void findBigElements(tree *binaryTree, int number) // Kullanicinin istedigi bir degerden buyuk elemanlari listeleyebilmesi icin findBigElements() fonksiyonu olusturdum.
-{                                    // fonksiyon girdisi olarak binaryTree data tipinden pointer ve kullanicinin girdigi degeri aldim.
-    if (binaryTree == NULL)                // Eger binaryTree bos ise veya kullanicinin girdigi degerden buyuk deger yok ise fonksiyonu sonlandirdim.
-        return;
-    if (binaryTree->data > number) // Eger bakilan data kullanicinin girdigi degerden buyuk ise veriyi daha sonra duzgun sekilde listeleyebilmek icin diziye aktardim.
-    {
-        bigElementsArray[k] = binaryTree->data;
-        control = 1; // Eger kullanicinin girdigi degerden buyuk herhangi bir data var ise control degiskeninin degerini degistirdim.
-        k++;         // Daha once tanimladigim dizi eleman sayacini burada tekrar kullandim. Islem yapilrken degeri 0'dan baslatarak diziyi tekrar bastan yazmis oldum.
+        Search(binaryTree, wanted);
     }
-    findBigElements(binaryTree->left, number); // Odev bilgilendirmesinde verildigi sekilde preorder olarak arattım.
-    findBigElements(binaryTree->right, number);
+
+    // Returned -1 if the function does not finished properly
+    return -1;
+}
+
+// Created an array for finding and listing greater elements than user input of tree.
+int bigElementsArray[100];
+// Created a variable for control if any greater element is found.
+int control = 0;
+// Created a function for finding greater elements than user input of tree using Preorder Traversal
+void FindBigElements(BinaryTree *binaryTree, int number)
+{
+    // Stopped the function if tree is empty or there is no greater elements than user input in tree.
+    if (binaryTree == NULL)
+        return;
+
+    // If the controlled data is greater than user input:
+    if (binaryTree->data > number)
+    {
+        // Added data to array and assigned 1 to control variable.
+        bigElementsArray[index] = binaryTree->data;
+        control = 1;
+        // Increased array index by one for next data.
+        index++;
+    }
+    FindBigElements(binaryTree->left, number);
+    FindBigElements(binaryTree->right, number);
+}
+
+void WaitForUser()
+{
+    getchar();
+    fflush(stdin);
+    getchar();
+}
+
+void ClearConsole()
+{
+    system("clear");
 }
 
 #endif

@@ -1,124 +1,166 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "tree.h"
-// Added required libraries
+// Included tree library.
 
 int main()
 {
-    // Created tree
-    tree *binaryTree = NULL; // main() fonksiyonunda arama agaclarında kullanmak icin binaryTree data yapisindan bir pointer olusturdum ve NULL ile isaretledim.
+    // Created Binary Tree pointer and assigned null.
+    BinaryTree *binaryTree = NULL;
 
-    int process = 1, sum = 0, choice, number, j, avg, f; // Secimi, girilen degeri, sum, ortalama ve sayma sayaci icin degisken atadim.
+    // Created required variables for: operation choosing, user input, sum, average and index counters.
+    int sum = 0, choice, number, j, avg, f;
 
-    while (process == 1) // Islem degiskeni 1 oldugu surece islemleri sonlandirmayacak while() dongusu olusturdum.
-    {                    // Kullaniciya process seceneklerini sundum ve process numaralarini belirttim.
-        printf("1: Ekle(Add)\n2: Eleman search(Find node)\n3: Yaprak Ortalamasi(Average of Leaves)\n4: Girilen degerden buyuk verileri bul(Find larger values than the entered value)\n5: Girilen seviyedeki elemanlari bul(Find data of entered level)\n6: Cikis(Exit)\n");
-        scanf("%d", &choice); // Kullanicinin sectigi islemi tutmak icin daha once atadigim degiskeni kullandim.
-        switch (choice)       // Islemleri birbirinden ayirabilmek icin switch-case yapisini kullandim. Girddi olarak kulanicinin secimini aldim.
+    // Created an infinite loop for ending program when user decides to.
+    while (true)
+    {
+        // Printed the selectable options to console for user.
+        printf("1: Add\n2: Search Element\n3: Arithmetic Mean of Leaves\n4: Find Greater Elements Than A Number\n5: Find Elements At Level\n6: Exit\n");
+        // Read the user input and assigned to 'choice' variable.
+        scanf("%d", &choice);
+
+        // Created a switch statement for executing separated functions by user choice.
+        switch (choice)
         {
-        case 1: // "1" girilmesi sonucu Kullanicidan eklemek istedigi sayiyi aldim.
-            printf("Eklemek istediginiz veriyi girin...\n");
+            // If user chooses 1:
+        case 1:
+            // Guided user to adding an element to binary tree.
+            printf("Enter the number that you want to add...\n");
+            // Read the user input and assigned to 'number' variable.
             scanf("%d", &number);
-            binaryTree = add(binaryTree, number); // ekleme fonksiyonunu binaryTree pointeri ve deger girdisi ile calistirarak ekleme islemi tamamlaninca ekrani temizledim.
-            system("clear");
+            // Called the add function for Binary Tree with 'number' and tree pointer.
+            binaryTree = Add(binaryTree, number);
+            // Cleared console.
+            ClearConsole();
             break;
 
+            // If user chooses 2:
         case 2:
-            stepCount = 1; // "2" girilmesi sonucu stepCount degiskenini "1" e esitleyip kullanicidan aramak istedigi elemani girmesini istedim ve girdigi elemani tarayarak aldim.
-            printf("Aramak istediginiz veriyi girin...\n");
+            // Assigned 1 to 'stepCount' variable for starting from 1.
+            stepCount = 1;
+            // Guided user to search an element in binary tree.
+            printf("Enter the number that you want to search...\n");
+            // Read the user input and assigned to 'number' variable.
             scanf("%d", &number);
-            search(binaryTree, number); // search() fonksiyonunu binaryTree pointeri ve kullanicinin girdigi deger ile calistirdim
-            getchar();
-            fflush(stdin);
-            getchar();
-            system("clear"); // Ana process menusune donmeden once  ekrani temizledim.
+            // Called the search function
+            Search(binaryTree, number);
+            // Waited for user and cleared console.
+            WaitForUser();
+            ClearConsole();
             break;
 
-        case 3: // "3" girilmesi sonucu sayaclari ve sum degiskenini "0"a esitleyerek :
+            // If user chooses 3:
+        case 3:
+            // Assigned 0 to index counters and sum
             i = 0;
             j = 0;
             sum = 0;
-            leaf(binaryTree); // leaf() fonksiyonunu binaryTree pointeri ile calistirarak :
-            if (i == 0)       // Agac bos ise kullaniciya bildirip ana menuye yonlendirdim
+            // Called function for calculating arithmetic mean of leaves.
+            Leaf(binaryTree);
+
+            // If function did not increased 'i', that means tree is empty
+            if (i == 0)
             {
-                printf("Agac bos!\n");
-                // getch();
-                getchar();
-                fflush(stdin);
-                getchar();
+                // User informed about empty tree and waited for user
+                printf("Tree is empty! Add new numbers by choosing option 1.\n");
+                WaitForUser();
+                ClearConsole();
                 break;
             }
-            while (j < i) // Agac bos degil ise agactaki leaf sayisina ulasincaya kadar :
+
+            // If tree is not empty calculated sum of leaves and divided by leaf count for calculating arithmetic mean
+            while (j < i)
             {
-                sum = sum + leaves[j]; // Yapraklari topladim ve eleman sayisini tutan degeri artirdim.
+                sum = sum + leaves[j];
                 j++;
             }
-            avg = sum / j; // ortalama degiskenine leaf degiskenlerinin toplaminin leaf sayisina bolumunu esitleyerek ekrana yazdirdim.
-            printf("Yaprak dugumlerinin ortalamasi : %d\n", avg);
-            getchar();
-            fflush(stdin);
-            getchar();
-            system("clear"); // Ana menuye donmeden once ekrani temizledim.
+
+            // Calculated arithmetic mean by dividing sum to leaf count.
+            avg = sum / j;
+            // Printed arithmetic mean to console.
+            printf("Arithmetic mean of leaves : %d\n", avg);
+            // Waited for user and cleared console.
+            WaitForUser();
+            ClearConsole();
             break;
 
-        case 4: // "4" girilmesi sonucu Kullanicidan , kendisinden buyuk sayilari gormek istedigi degeri girmesini istedim.
-            printf("Kendisinden buyuk olan sayilari bulmak istedigin sayiyi gir...\n");
-            scanf("%d", &number); // Kullanicinin girdigi sayiyi tarayarak :
-            printf("%d degerinden buyuk elemanlar : ", number);
+            // If user chooses 4:
+        case 4:
+            // Guided user to enter a number for finding greater elements in tree.
+            printf("Enter the number you want to find elements that are greater than the number...\n");
+            // Read the user input and assigned to 'number' variable.
+            scanf("%d", &number);
+            // Printed all elements thats greater than number to console.
+            printf("The elements thats greater than %d : ", number);
+            // Assigned 0 to control and index variables for reset.
             control = 0;
-            k = 0;
-            findBigElements(binaryTree, number); // findBigElements() fonksiyonunu binaryTree pointeri ve girilen number ile calistirarak.
+            index = 0;
+            // Called FindBigElements function.
+            FindBigElements(binaryTree, number);
+
+            // If control is 0 there is no greater element in tree prints 'None', else prints elements to console.
             if (control == 0)
-                printf("Yoktur.\n"); // control degiskeni degismemisse girilen degerden buyuk elemanin olmadigini ;
-            else                     // control degiskeni degismisse :
+                printf("None.\n");
+            else
             {
-                for (int i = 0; i < k; i++)
+                for (int i = 0; i < index; i++)
                 {
-                    if (i == k - 1) // dizinin son elemaninin sonrasinda "-" isareti koymayacak ;
-                        printf("%d", bigElementsArray[i]);
-                    else // Dizinin search elemanlari icin eleman arasina "-" koyacak sekilde diziyi yazdirdim.
+                    // If the element is last element, printed element and added new line char('\n') to end.
+                    if (i == index - 1)
+                        printf("%d\n", bigElementsArray[i]);
+                    else // Else printed element with '-' separator.
                         printf("%d - ", bigElementsArray[i]);
                 }
             }
-            printf("\n");
-            getchar();
-            fflush(stdin);
-            getchar();
-            system("clear"); // Ana menuye donmeden once ekrani temizledim.
+            // Waited for user and cleared console.
+            WaitForUser();
+            ClearConsole();
             break;
 
-        case 5: // "5" girilmesi sonucu Kullanicidan , hangi seviyedeki elemanlari gormek istedigi sordum.
-            printf("Hangi seviyedeki elemanlari gormek istersiniz...\n");
-            scanf("%d", &number); // Gormek istedigi seviyeyi tarayarak degiskene atadim ve :
-            f = 0;                // sayac egiskenlerini "0"a esitleyip :
-            k = 0;
-            printf("%d. Seviyedeki elemanlar : ", number);
-            level(binaryTree, number); // level() fonksiyonunu binaryTree pointeri ve kullanicinin girdigi deger ile calistirdim.
-            if (k == 0)                // kullanicinin girdigi seviyede eleman yok ise olmadigini ;
-                printf(" Yok !");
-            for (int i = 0; i < k; i++) // eleman var ise :
+        // If user chooses 5:
+        case 5:
+            // Guided user to enter a number for finding greater elements in tree.
+            printf("Which level of tree elements do you want to see...\n");
+            // Read the user input and assigned to 'number' variable.
+            scanf("%d", &number);
+
+            // Assigned 0 to f and index variables for reset.
+            f = 0;
+            index = 0;
+
+            // Printed all elements of level to console.
+            printf("Elements of level %d. : ", number);
+            // Called level function.
+            Level(binaryTree, number);
+
+            // If there is no element on specified level
+            if (index == 0)
+                printf("None!");
+
+            // If there is elements in specified level printed to console.
+            for (int i = 0; i < index; i++)
             {
-                if (i == k - 1) // sonuncu elemani sonrasina "-" koymadan
-                    printf("%d", levelArray[i]);
-                else // search elemanlari ise aralarina "-" yerlesitrilecek sekilde ekrana yazdirdim.
+                // If the element is last element, printed element and added new line char('\n') to end.
+                if (i == index - 1)
+                    printf("%d\n", levelArray[i]);
+                else // Else printed element with '-' separator.
                     printf("%d - ", levelArray[i]);
             }
-            printf("\n");
-            getchar();
-            fflush(stdin);
-            getchar();
-            system("clear"); // Ana menuye donmeden once ekrani temizledim.
+            // Waited for user and cleared console.
+            WaitForUser();
+            ClearConsole();
             break;
 
-        case 6: // "6" girilmesi sonucu cikis yapmak icin while dongusunun devamini asglayan degeri "0" a esitleyerek ana menuden cikisi sagladim.
-            process = 0;
+        // If user chooses 6:
+        case 6:
+            // Stopped program with exit code 0.
+            return 0;
             break;
-
+        // If user input is invalid, cleared console and re-printed options.
         default:
-            system("clear"); // Islem menusunde gecersiz giris yapildigi takdirde ekrani temizleyerel kullnaiciyi ana menuye tekrar yonlendirdim.
+            ClearConsole();
             break;
         }
     }
 
+    // Stopped program with exit code 0.
     return 0;
 }
