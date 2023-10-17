@@ -7,22 +7,22 @@ using namespace std;
 
 class Animal
 {                // Animal class definition
-public:          // access modifier
+public:          // Access modifier
     string name; // Animal's name declaration
     string kind; // Animal's kind declaration
     int age;     // Animal's age declaration
 
-    void enterName(string name)
+    void EnterName(string name)
     {
         this->name = name;
     }
 
-    void enterKind(string kind)
+    void EnterKind(string kind)
     {
         this->kind = kind;
     }
 
-    void enterAge(int age)
+    void EnterAge(int age)
     {
         this->age = age;
     }
