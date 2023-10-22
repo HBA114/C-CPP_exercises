@@ -2,15 +2,15 @@
 
 Node::Node(int id)
 {
-    node_id = id;
-    is_visited = false;
+    nodeId = id;
+    isVisited = false;
 }
 
 Node::Node()
 {
 }
 
-void Node::add_adjacent(int adjacent_node_id)
+void Node::add_adjacent(int adjacentNodeId)
 {
-    adjacent_nodes.push_back(adjacent_node_id);
+    adjacentNodes.push_back(adjacentNodeId);
 }

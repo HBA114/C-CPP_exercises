@@ -2,15 +2,15 @@
 
 vector<Node> read_file(string file_name)
 {
-    ifstream Matrix(file_name);
+    ifstream matrix(file_name);
 
     string line;
     vector<string> lines;
 
-    if (!Matrix.is_open())
+    if (!matrix.is_open())
         cout << "File not found!" << endl;
 
-    while (getline(Matrix, line))
+    while (getline(matrix, line))
         lines.push_back(line);
 
     vector<Node> nodes;
@@ -29,9 +29,9 @@ vector<Node> read_file(string file_name)
             if (lines[i][j] == '1')
             {
                 bool control = true;
-                for (int k = 0; k < nodes[i].adjacent_nodes.size(); k++)
+                for (int k = 0; k < nodes[i].adjacentNodes.size(); k++)
                 {
-                    if (nodes[i].adjacent_nodes[k] == nodes[j_index].node_id)
+                    if (nodes[i].adjacentNodes[k] == nodes[j_index].nodeId)
                     {
                         control = false;
                         break;
@@ -43,28 +43,8 @@ vector<Node> read_file(string file_name)
             }
             j_index++;
         }
-
-        // for (int j = 0; j < lines[i].length(); j += 2)
-        // {
-        //     if (lines[i][j] == '1')
-        //     {
-        //         bool control = true;
-        //         for (int k = 0; k < nodes[i].adjacent_nodes.size(); k++)
-        //         {
-        //             if (nodes[i].adjacent_nodes[k].node_id == nodes[j_index].node_id)
-        //             {
-        //                 control = false;
-        //                 break;
-        //             }
-        //         }
-
-        //         if (control)
-        //             nodes[i].add_adjacent(nodes[j_index]);
-        //     }
-        //     j_index++;
-        // }
     }
 
-    Matrix.close();
+    matrix.close();
     return nodes;
 }

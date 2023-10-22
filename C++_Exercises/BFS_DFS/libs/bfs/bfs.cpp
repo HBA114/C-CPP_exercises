@@ -17,26 +17,24 @@ void BFS::print_order()
 
     while (queue.size() > 0)
     {
-        for (int i = 0; i < queue[0].adjacent_nodes.size(); i++)
+        for (int i = 0; i < queue[0].adjacentNodes.size(); i++)
         {
             bool control = true;
             for (int j = 0; j < queue.size(); j++)
             {
-                if (queue[j].node_id == queue[0].adjacent_nodes[i])
+                if (queue[j].nodeId == queue[0].adjacentNodes[i])
                 {
                     control = false;
                     break;
                 }
             }
 
-            if (control && nodes[queue[0].adjacent_nodes[i]].is_visited == false)
-            {
-                queue.push_back(nodes[queue[0].adjacent_nodes[i]]);
-            }
+            if (control && nodes[queue[0].adjacentNodes[i]].isVisited == false)
+                queue.push_back(nodes[queue[0].adjacentNodes[i]]);
         }
 
-        queue[0].is_visited = true;
-        nodes[queue[0].node_id].is_visited = true;
+        queue[0].isVisited = true;
+        nodes[queue[0].nodeId].isVisited = true;
         visit_order.push_back(queue[0]);
         queue.erase(queue.begin());
     }
@@ -44,7 +42,7 @@ void BFS::print_order()
     cout << "Breadth First Search Visit Order:" << endl;
     for (int i = 0; i < visit_order.size(); i++)
     {
-        cout << visit_order[i].node_id;
+        cout << visit_order[i].nodeId;
         i != visit_order.size() - 1 ? cout << " -> " : cout << "";
     }
     cout << endl;
