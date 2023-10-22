@@ -13,15 +13,6 @@ int main(int argc, char **argv)
     int num2 = atoi(argv[2]);
     int themax;
 
-    // if (num1 > num2)
-    // {
-    //     themax = num1;
-    // }
-    // else
-    // {
-    //     themax = num2;
-    // }
-
     themax = (num1 > num2 ? num1 : num2);
 
     printf("max of %d and %d is %d\n", num1, num2, themax);
